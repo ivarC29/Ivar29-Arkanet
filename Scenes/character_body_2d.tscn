@@ -203,3 +203,11 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_vh50d")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="ShootPos" type="Marker2D" parent="."]
+position = Vector2(125, 9)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

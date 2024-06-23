@@ -6,14 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://7oq8ny0xdlin" path="res://Scenes/guided_enemy.tscn" id="4_t3pbh"]
 
 [node name="Nivel1" type="Node2D"]
-position = Vector2(377, 530)
 
 [node name="Player" parent="." instance=ExtResource("1_feuik")]
-position = Vector2(-162, 36)
+position = Vector2(219, 549)
 
 [node name="EnemyGroup" parent="." instance=ExtResource("2_8folw")]
-position = Vector2(-174, -419)
+position = Vector2(203, 102)
 script = ExtResource("3_73e0d")
 
 [node name="GuidedEnemy" parent="." instance=ExtResource("4_t3pbh")]
-position = Vector2(851, 455)
+position = Vector2(1771, 938)

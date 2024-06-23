@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://dwnwmy4lxie7f"]
+
+[ext_resource type="Texture2D" uid="uid://d13epdl7y871s" path="res://Assets/disparo/disparo.png" id="1_m2qlp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qkh2"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(0, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ta7ou"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(60, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb708"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(120, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cefn"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(180, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otbjl"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(240, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vncuh"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(300, 0, 60, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrncb"]
+atlas = ExtResource("1_m2qlp")
+region = Rect2(360, 0, 60, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ooskc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qkh2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ta7ou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb708")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cefn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otbjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vncuh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrncb")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 30.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w7e81"]
+radius = 6.99841
+height = 33.9923
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_133tw"]
+size = Vector2(6, 15)
+
+[node name="Shoot" type="RigidBody2D"]
+gravity_scale = 0.0
+linear_velocity = Vector2(1500, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ooskc")
+animation = &"shoot"
+autoplay = "shoot"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.999999, 0)
+rotation = 1.56882
+shape = SubResource("CapsuleShape2D_w7e81")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(22, 0)
+shape = SubResource("RectangleShape2D_133tw")
+debug_color = Color(0.894118, 0.282353, 0.407843, 0.419608)
