@@ -28,7 +28,4 @@ func _physics_process(_delta):
 	_get_input()
 	move = move_and_collide(move * _delta)
 
-	if move:
-		playback.start("on_attack")
-
 

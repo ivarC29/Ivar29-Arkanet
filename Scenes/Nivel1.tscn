@@ -1,18 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjfib7ivboidf"]
+[gd_scene load_steps=8 format=3 uid="uid://cjfib7ivboidf"]
 
-[ext_resource type="PackedScene" uid="uid://dbp8ht1100p84" path="res://Scenes/character_body_2d.tscn" id="1_feuik"]
+[ext_resource type="PackedScene" uid="uid://dbp8ht1100p84" path="res://Scenes/player.tscn" id="1_feuik"]
 [ext_resource type="PackedScene" uid="uid://delo1jjt7ms16" path="res://Scenes/enemy_group.tscn" id="2_8folw"]
 [ext_resource type="Script" path="res://Scripts/enemy_group.gd" id="3_73e0d"]
 [ext_resource type="PackedScene" uid="uid://7oq8ny0xdlin" path="res://Scenes/guided_enemy.tscn" id="4_t3pbh"]
+[ext_resource type="Script" path="res://Scripts/PowerApp.gd" id="5_hniox"]
+[ext_resource type="Texture2D" uid="uid://co6yjdg6gl751" path="res://Assets/disparo/powerUp.png" id="6_7lmjb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7opjf"]
+radius = 34.3657
 
 [node name="Nivel1" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_feuik")]
 position = Vector2(219, 549)
+scale = Vector2(0.7, 0.7)
 
 [node name="EnemyGroup" parent="." instance=ExtResource("2_8folw")]
-position = Vector2(203, 102)
+position = Vector2(-98.6661, -0.747643)
+scale = Vector2(0.7, 0.7)
 script = ExtResource("3_73e0d")
 
 [node name="GuidedEnemy" parent="." instance=ExtResource("4_t3pbh")]
-position = Vector2(1771, 938)
+position = Vector2(900, 990)
+scale = Vector2(0.7, 0.7)
+
+[node name="PowerApp" type="Area2D" parent="."]
+position = Vector2(730, 560)
+script = ExtResource("5_hniox")
+
+[node name="PowerUp" type="Sprite2D" parent="PowerApp"]
+texture = ExtResource("6_7lmjb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PowerApp"]
+shape = SubResource("CircleShape2D_7opjf")
+
+[connection signal="body_entered" from="PowerApp" to="PowerApp" method="_on_body_entered"]

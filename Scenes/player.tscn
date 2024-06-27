@@ -1,8 +1,13 @@
 [gd_scene load_steps=28 format=3 uid="uid://dbp8ht1100p84"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_1ultb"]
+[ext_resource type="Shader" path="res://Scenes/Shaders/hit.gdshader" id="2_7y5h4"]
 [ext_resource type="Texture2D" uid="uid://ke2ubyfioc0v" path="res://Assets/personaje/pj_barco_2.png" id="2_hjdxv"]
 [ext_resource type="Texture2D" uid="uid://dv00gt25ifbq5" path="res://Assets/personaje/pj_globo.png" id="3_enw4h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6iqhc"]
+shader = ExtResource("2_7y5h4")
+shader_parameter/enabled = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5og5l"]
 atlas = ExtResource("2_hjdxv")
@@ -71,14 +76,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Ship:modulate")
+tracks/1/path = NodePath("Ship:material:shader_parameter/enabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:collision_layer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:collision_mask")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_x1ghx"]
@@ -113,20 +142,44 @@ tracks/0/keys = {
 "values": [0.0, -0.0698132]
 }
 
-[sub_resource type="Animation" id="Animation_72cad"]
-resource_name = "on_attack"
-length = 0.5
+[sub_resource type="Animation" id="Animation_uxgma"]
+resource_name = "take_damage"
+length = 2.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Ship:modulate")
+tracks/0/path = NodePath("Ship:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:collision_layer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.843137, 0, 0.25098, 1)]
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:collision_mask")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aiw52"]
@@ -135,7 +188,7 @@ _data = {
 "RESET": SubResource("Animation_kp7ow"),
 "move_left": SubResource("Animation_x1ghx"),
 "move_right": SubResource("Animation_mjd0i"),
-"on_attack": SubResource("Animation_72cad")
+"take_damage": SubResource("Animation_uxgma")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rb86g"]
@@ -147,9 +200,6 @@ animation = &"move_left"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbhdf"]
 animation = &"move_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j5bmr"]
-animation = &"on_attack"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_erw1p"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ml3pr"]
@@ -157,10 +207,6 @@ animation = &"on_attack"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_endtf"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3krgr"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yms57"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jf7pl"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vh50d"]
 states/End/position = Vector2(692, 102.519)
@@ -171,24 +217,28 @@ states/move_left/node = SubResource("AnimationNodeAnimation_i4tgf")
 states/move_left/position = Vector2(314.667, 100.222)
 states/move_right/node = SubResource("AnimationNodeAnimation_jbhdf")
 states/move_right/position = Vector2(546.667, 100.222)
-states/on_attack/node = SubResource("AnimationNodeAnimation_j5bmr")
-states/on_attack/position = Vector2(428.444, 178)
-transitions = ["RESET", "move_right", SubResource("AnimationNodeStateMachineTransition_erw1p"), "move_right", "RESET", SubResource("AnimationNodeStateMachineTransition_ml3pr"), "move_left", "RESET", SubResource("AnimationNodeStateMachineTransition_endtf"), "RESET", "move_left", SubResource("AnimationNodeStateMachineTransition_3krgr"), "on_attack", "RESET", SubResource("AnimationNodeStateMachineTransition_yms57"), "RESET", "on_attack", SubResource("AnimationNodeStateMachineTransition_jf7pl")]
+transitions = ["RESET", "move_right", SubResource("AnimationNodeStateMachineTransition_erw1p"), "move_right", "RESET", SubResource("AnimationNodeStateMachineTransition_ml3pr"), "move_left", "RESET", SubResource("AnimationNodeStateMachineTransition_endtf"), "RESET", "move_left", SubResource("AnimationNodeStateMachineTransition_3krgr")]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmfkk"]
+radius = 78.0
+height = 172.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_1ultb")
 
 [node name="Ship" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_6iqhc")
 sprite_frames = SubResource("SpriteFrames_u1viw")
 animation = &"Idle"
 autoplay = "Idle"
 
 [node name="Globe" type="Sprite2D" parent="."]
-position = Vector2(4, -56)
+material = SubResource("ShaderMaterial_6iqhc")
+position = Vector2(6, -59)
 texture = ExtResource("3_enw4h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -17)
+position = Vector2(-7.15256e-07, -0.999996)
 rotation = 1.5953
 shape = SubResource("CapsuleShape2D_xub2b")
 
@@ -208,6 +258,16 @@ anim_player = NodePath("../AnimationPlayer")
 wait_time = 0.2
 
 [node name="ShootPos" type="Marker2D" parent="."]
-position = Vector2(125, 9)
+position = Vector2(145, 11)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_fmfkk")
+debug_color = Color(0.0117647, 0.65098, 0, 0.419608)
+
+[node name="Hit" type="AnimationPlayer" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

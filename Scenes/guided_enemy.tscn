@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://7oq8ny0xdlin"]
+[gd_scene load_steps=22 format=3 uid="uid://7oq8ny0xdlin"]
 
 [ext_resource type="Script" path="res://Scripts/guided_enemy.gd" id="1_d3s3x"]
 [ext_resource type="Texture2D" uid="uid://dwjaeb4sxdmtj" path="res://Assets/enemigos/enemigo2.png" id="1_guhbd"]
+[ext_resource type="Texture2D" uid="uid://cs34qrbjcmeer" path="res://Assets/enemigos/explosion.png" id="3_iqqvg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rg2f"]
 atlas = ExtResource("1_guhbd")
@@ -27,6 +28,46 @@ region = Rect2(584, 0, 146, 95)
 atlas = ExtResource("1_guhbd")
 region = Rect2(730, 0, 146, 95)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_orok6"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(0, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu77b"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(200, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmid6"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(400, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6s5m"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(600, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s62bb"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(800, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ht2k6"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(1000, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehirb"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(1200, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfful"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(1400, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tms85"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(1600, 0, 200, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_teunk"]
+atlas = ExtResource("3_iqqvg")
+region = Rect2(1800, 0, 200, 170)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_q0dp8"]
 animations = [{
 "frames": [{
@@ -51,20 +92,56 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orok6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu77b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmid6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6s5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s62bb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ht2k6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehirb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfful")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tms85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_teunk")
+}],
+"loop": false,
+"name": &"explotion",
+"speed": 15.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8n25p"]
 radius = 15.1186
 height = 111.953
 
-[node name="GuidedEnemy" type="Area2D"]
+[node name="GuidedEnemy" type="Area2D" groups=["enemy"]]
 position = Vector2(-14, 0)
 script = ExtResource("1_d3s3x")
+points = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(14, 2)
 sprite_frames = SubResource("SpriteFrames_q0dp8")
-animation = &"Idle"
+animation = &"explotion"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dwnwmy4lxie7f"]
+[gd_scene load_steps=13 format=3 uid="uid://dwnwmy4lxie7f"]
 
 [ext_resource type="Texture2D" uid="uid://d13epdl7y871s" path="res://Assets/disparo/disparo.png" id="1_m2qlp"]
+[ext_resource type="Script" path="res://Scripts/Shoot.gd" id="1_wj2rb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6qkh2"]
 atlas = ExtResource("1_m2qlp")
@@ -69,6 +70,7 @@ size = Vector2(6, 15)
 [node name="Shoot" type="RigidBody2D"]
 gravity_scale = 0.0
 linear_velocity = Vector2(1500, 0)
+script = ExtResource("1_wj2rb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ooskc")
@@ -86,3 +88,5 @@ shape = SubResource("CapsuleShape2D_w7e81")
 position = Vector2(22, 0)
 shape = SubResource("RectangleShape2D_133tw")
 debug_color = Color(0.894118, 0.282353, 0.407843, 0.419608)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
